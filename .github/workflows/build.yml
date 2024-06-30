@@ -8,11 +8,11 @@ jobs:
     name: yakamoz
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           submodules: recursive
       - name: Cache qmk toolchain
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         env:
           cache-name: qmk-toolchain
         with:
@@ -42,25 +42,34 @@ jobs:
         working-directory: ./qmk_firmware
         run: qmk compile -kb yakamoz -km default 
       - name: Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: yakamoz-keyboard
+          name: yakamoz-keyboard-defauld
           path: qmk_firmware/yakamoz_default.uf2
 
       - name: Build default_trackbal keymap
         working-directory: ./qmk_firmware
         run: qmk compile -kb yakamoz -km default_trackball
       - name: Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: yakamoz-keyboard
+          name: yakamoz-keyboard-trackball
           path: qmk_firmware/yakamoz_default_trackball.uf2
 
       - name: Build vial keymap
         working-directory: ./vial-qmk
         run: qmk compile -kb yakamoz -km vial 
       - name: Archive
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
-          name: yakamoz-keyboard
+          name: yakamoz-keyboard-vial
           path: vial-qmk/yakamoz_vial.uf2
+
+      - name: Build vial_ssd1306 keymap
+        working-directory: ./vial-qmk
+        run: qmk compile -kb yakamoz -km vial_ssd1306
+      - name: Archive
+        uses: actions/upload-artifact@v4
+        with:
+          name: yakamoz-vial-ssd1306
+          path: vial-qmk/yakamoz_vial_ssd1306.uf2
